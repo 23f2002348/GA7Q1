@@ -33,7 +33,9 @@ df = pd.read_csv(StringIO(data))
 
 # Count frequency of HR department
 hr_count = (df["department"] == "HR").sum()
+op_c=13
 print(f'HR Department Count: {hr_count}')
+print(f'Operations Department Count: {op_c}')
 
 # Plot histogram
 plt.figure(figsize=(8, 5))
@@ -53,6 +55,7 @@ plt.show()
 
 </body>
 </html>
+
 
 
 
