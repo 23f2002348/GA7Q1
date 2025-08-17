@@ -9,7 +9,6 @@ np.random.seed(42)
 # Set Seaborn style and context
 sns.set_style("whitegrid")
 sns.set_context("talk")
-sns.lineplot()
 # Generate synthetic customer engagement data
 n_samples = 300
 data = pd.DataFrame({
