@@ -3,40 +3,50 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-# Set random seed for reproducibility
+# -------------------------------
+# Generate synthetic seasonal revenue data
+# -------------------------------
 np.random.seed(42)
 
-# Set Seaborn style and context
+months = pd.date_range("2024-01-01", periods=12, freq="M").strftime("%b")
+base_revenue = np.linspace(20000, 35000, 12)  # gradual upward trend
+seasonality = 3000 * np.sin(np.linspace(0, 2 * np.pi, 12))  # seasonal effect
+noise = np.random.normal(0, 1000, 12)  # random business fluctuations
+
+revenue = base_revenue + seasonality + noise
+df = pd.DataFrame({"Month": months, "Revenue": revenue})
+
+# -------------------------------
+# Seaborn Visualization
+# -------------------------------
 sns.set_style("whitegrid")
-sns.set_context("talk")
-# Generate synthetic customer engagement data
-n_samples = 300
-data = pd.DataFrame({
-    "email_open_rate": np.clip(np.random.normal(0.5, 0.1, n_samples), 0, 1),
-    "click_through_rate": np.clip(np.random.normal(0.2, 0.05, n_samples), 0, 1),
-    "time_on_site": np.random.normal(120, 30, n_samples),  # in seconds
-    "pages_per_visit": np.random.normal(5, 1.5, n_samples),
-    "bounce_rate": np.clip(np.random.normal(0.4, 0.1, n_samples), 0, 1),
-    "conversion_rate": np.clip(np.random.normal(0.05, 0.02, n_samples), 0, 1),
-})
+sns.set_context("talk")  # presentation-ready font sizes
 
-# Compute correlation matrix
-corr = data.corr()
+plt.figure(figsize=(8, 8))  # 512x512 pixels at dpi=64
 
-# Create figure and heatmap
-plt.figure(figsize=(8, 8))  # 8 inches * 64 dpi = 512 pixels
-heatmap = sns.heatmap(
-    corr,
-    annot=True,
-    fmt=".2f",
-    cmap="coolwarm",
-    square=True,
-    linewidths=0.5,
-    cbar_kws={"shrink": 0.8}
+ax = sns.lineplot(
+    data=df,
+    x="Month",
+    y="Revenue",
+    marker="o",
+    linewidth=2.5,
+    palette="deep",
+    color="steelblue"
 )
 
-# Add title
-plt.title("Customer Engagement Correlation Matrix", fontsize=16)
+# Titles and labels
+plt.title("Monthly Revenue Trends (Synthetic Data)", fontsize=16, weight="bold")
+plt.xlabel("Month", fontsize=12)
+plt.ylabel("Revenue (USD)", fontsize=12)
 
-# Save figure with required dimensions
-plt.savefig("chart.png", dpi=64, bbox_inches="tight")
+# Rotate x-axis labels for readability
+plt.xticks(rotation=45)
+
+# Tight layout for better spacing
+plt.tight_layout()
+
+# -------------------------------
+# Save output
+# -------------------------------
+plt.savefig("chart.png", dpi=64, bbox_inches="tight")  # 8 in * 64 dpi = 512 px
+plt.close()
