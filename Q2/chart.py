@@ -22,7 +22,7 @@ df = pd.DataFrame({"Month": months, "Revenue": revenue})
 sns.set_style("whitegrid")
 sns.set_context("talk")  # presentation-ready font sizes
 
-plt.figure(figsize=(8, 8))  # 512x512 pixels at dpi=64
+plt.figure(figsize=(6, 6))  # 512x512 pixels at dpi=64
 
 ax = sns.lineplot(
     data=df,
